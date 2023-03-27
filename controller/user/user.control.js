@@ -1,4 +1,6 @@
 const userService = require("./user.service");
+const jwt = require("jsonwebtoken");
+// require("dotenv").config();
 
 const userControl = {
   async getUser(req, res) {
@@ -42,6 +44,30 @@ const userControl = {
       const { id } = req.params;
       const updated = await userService.updateUser(+id, req.body);
       res.status(200).json(updated);
+    } catch (error) {
+      res.status(400).json({
+        error: true,
+        message: error.message,
+      });
+    }
+  },
+  async login(req, res, next) {
+    try {
+      const { phone } = req.body;
+      const user = await userService.getByPhone(phone);
+
+      if (!user) {
+        res.status(403).json({
+          message: "invalid user phone number!",
+        });
+      }
+
+      const token = jwt.sign({ phone: user.phone }, process.env.SECRET_KEY, {
+        expiresIn: Number(process.env.TOKEN_EXPIRE_TIME),
+      });
+      res.json({
+        access_token: token,
+      });
     } catch (error) {
       res.status(400).json({
         error: true,

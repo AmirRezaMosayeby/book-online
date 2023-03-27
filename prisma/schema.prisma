@@ -20,7 +20,8 @@ model User {
   birthday          String?
   password          String   @unique
 
-  order Order[]
+  order       Order[]
+  transaction Transaction[]
 }
 
 model Ticket {
@@ -45,6 +46,21 @@ model Order {
   User   User? @relation(fields: [userId], references: [id])
   userId Int?
 
-  ticket   Ticket? @relation(fields: [ticketId], references: [id])
-  ticketId Int?    @unique
+  ticket      Ticket?       @relation(fields: [ticketId], references: [id])
+  ticketId    Int?          @unique
+  // transaction Transaction?
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  transDate  DateTime @default(now())
+  cardNumber Int      @unique
+  paid       Float    @default(0)
+
+  order   Order @relation(fields: [orderId], references: [id])
+  orderId Int
+
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }

@@ -1,6 +1,5 @@
-const { PrismaClient } = require("@prisma/client");
 const { getAll } = require("./user.control");
-const prisma = new PrismaClient();
+const prisma = require("../../db");
 
 function getPermitted(data) {
   const instance = ["fname", "lname", "phone", "password", "birthYear"];
@@ -21,6 +20,18 @@ const userService = {
           id,
         },
       });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async getByPhone(phone) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          phone,
+        },
+      });
+      return user;
     } catch (error) {
       throw new Error(error.message);
     }
