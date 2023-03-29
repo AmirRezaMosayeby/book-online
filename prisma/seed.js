@@ -17,6 +17,7 @@ const testTicket = [
   {
     from_locaion: "2",
     to_location: "4",
+    code: 22445566,
     departure_date: new Date(2021, 3, 12, 8, 30),
     unit_price: 3.5,
     count: 2,

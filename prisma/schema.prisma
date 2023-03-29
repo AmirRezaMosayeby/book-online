@@ -22,6 +22,7 @@ model User {
 
 model Ticket {
   id             Int      @id @default(autoincrement())
+  code           Int      @unique
   from_locaion   String?
   to_location    String?
   arrival_date   DateTime @default(now())

@@ -13,6 +13,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Ticket" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "code" INTEGER NOT NULL,
     "from_locaion" TEXT,
     "to_location" TEXT,
     "arrival_date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -51,6 +52,9 @@ CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_password_key" ON "User"("password");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ticket_code_key" ON "Ticket"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Order_ticketId_key" ON "Order"("ticketId");
