@@ -65,8 +65,14 @@ const userControl = {
       const token = jwt.sign({ phone: user.phone }, process.env.SECRET_KEY, {
         expiresIn: Number(process.env.TOKEN_EXPIRE_TIME),
       });
+
+      const refreshToken = jwt.sign(
+        { phone: user.phone },
+        process.env.REFRESH_TOKEN
+      );
       res.json({
         access_token: token,
+        refresh_token: refreshToken,
       });
     } catch (error) {
       res.status(400).json({
