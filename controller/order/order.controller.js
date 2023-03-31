@@ -15,6 +15,7 @@ const orderControl = {
       if (ticket.count < count) {
         return res.status(406).json("more than avalable ticket!");
       }
+      console.log(req.user);
       const order = orderService.makeOrder({
         ticketId,
         count,

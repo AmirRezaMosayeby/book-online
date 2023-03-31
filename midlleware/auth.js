@@ -15,7 +15,8 @@ const tokenAuth = async function (req, res, next) {
 
   try {
     const { phone } = jwt.verify(token, process.env.SECRET_KEY);
-    const user = userService.getByPhone(phone);
+    const user = await userService.getByPhone(phone);
+    console.log(user);
     req.user = user;
     next();
   } catch (error) {

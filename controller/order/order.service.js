@@ -12,7 +12,9 @@ const orderService = {
             id: data.ticketId,
           },
           data: {
-            count: 5,
+            count: {
+              decrement: data.count,
+            },
           },
         }),
       ]);
@@ -23,5 +25,3 @@ const orderService = {
   },
 };
 module.exports = orderService;
-
-// prisma.ticket.count - data.count
