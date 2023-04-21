@@ -1,4 +1,5 @@
 const userService = require("./user.service");
+const refreshTokenService = require("../refreshToken/refToken.service");
 const jwt = require("jsonwebtoken");
 // require("dotenv").config();
 
@@ -54,7 +55,10 @@ const userControl = {
   async login(req, res, next) {
     try {
       const { phone } = req.body;
+      const date = new Date();
+      const newDate = date.setDate(date.getDate() + 7).toString();
       const user = await userService.getByPhone(phone);
+      const userId = user.id;
 
       if (!user) {
         res.status(403).json({
@@ -70,6 +74,13 @@ const userControl = {
         { phone: user.phone },
         process.env.REFRESH_TOKEN
       );
+
+      const refToken = await refreshTokenService.createRefToken(
+        refreshToken,
+        userId,
+        newDate
+      );
+      res.status(200).send(refToken);
       res.json({
         access_token: token,
         refresh_token: refreshToken,

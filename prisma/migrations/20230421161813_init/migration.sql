@@ -47,6 +47,15 @@ CREATE TABLE "Transaction" (
     CONSTRAINT "Transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+-- CreateTable
+CREATE TABLE "refreshToken" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "token" TEXT NOT NULL,
+    "expireTime" TEXT NOT NULL,
+    "userId" INTEGER,
+    CONSTRAINT "refreshToken_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
 
@@ -61,3 +70,6 @@ CREATE UNIQUE INDEX "Order_ticketId_key" ON "Order"("ticketId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Transaction_cardNumber_key" ON "Transaction"("cardNumber");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "refreshToken_userId_key" ON "refreshToken"("userId");

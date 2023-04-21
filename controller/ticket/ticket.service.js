@@ -20,7 +20,7 @@ const ticketService = {
 
   async createTicket(newData) {
     try {
-      return db.ticket.create({
+      return await db.ticket.create({
         data: newData,
       });
     } catch (error) {

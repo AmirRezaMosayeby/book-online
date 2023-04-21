@@ -18,6 +18,7 @@ model User {
   password          String        @unique
   order             Order[]
   transaction       Transaction[]
+  refreshToken      refreshToken?
 }
 
 model Ticket {
@@ -55,4 +56,12 @@ model Transaction {
   orderId    Int
   User       User?    @relation(fields: [userId], references: [id])
   userId     Int?
+}
+
+model refreshToken {
+  id         Int    @id @default(autoincrement())
+  token      String
+  expireTime String
+  User       User?  @relation(fields: [userId], references: [id])
+  userId     Int?   @unique
 }
